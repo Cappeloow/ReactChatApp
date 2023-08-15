@@ -2,17 +2,13 @@ import React from "react";
 
 type Props = {};
 
-function ChatBubble({}: Props) {
+function ChatBubble({ }: Props) {
   return (
-    <>
-      <div>
-        <span>username</span>
-        <div>
-          <p>meddelande/text</p>
-        </div>
-        <span>time</span>
-      </div>
-    </>
+    <div className="chatBubbleContainer">
+      <p>Användarnamn</p>
+      <p>Tja, hur är läget?</p>
+      <p>13:09</p>
+    </div>
   );
 }
 
