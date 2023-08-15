@@ -3,14 +3,19 @@ import ChatBar from "../components/ChatBar";
 import ChatBody from "../components/ChatBody";
 import ChatFooter from "../components/ChatFooter";
 import ChatHeader from "../components/ChatHeader";
+import "../styles/Lobby.css";
 type Props = {};
 
 function Lobby({}: Props) {
   return (
-    <>
-      <ChatHeader />
+    <div className="lobbyContainer">
       <ChatBar />
-    </>
+      <main>
+        <ChatHeader />
+        <ChatBody />
+        <ChatFooter />
+      </main>
+    </div>
   );
 }
 
