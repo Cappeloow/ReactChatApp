@@ -1,12 +1,12 @@
 import React from "react";
 import "../styles/LandingPage.css";
-// import { useNavigation } from "react";
+import { useNavigate } from "react-router-dom";
 type Props = {};
 
 function LandingPage({}: Props) {
-  // const navigate = useNavigation();
+  const navigate = useNavigate();
   const handleClick = () => {
-    // navigate("/lobby");
+    navigate("/lobby");
   };
   return (
     <div className="mainContainer">
