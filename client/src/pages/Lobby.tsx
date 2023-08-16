@@ -4,9 +4,16 @@ import ChatBody from "../components/ChatBody";
 import ChatFooter from "../components/ChatFooter";
 import ChatHeader from "../components/ChatHeader";
 import "../styles/Lobby.css";
-type Props = {};
+import { useChatContext } from "../context/ChatContext";
+import { useEffect } from "react";
+import { io } from "socket.io-client";
+function Lobby() {
+  const { username } = useChatContext();
 
-function Lobby({}: Props) {
+  useEffect(() => {
+    console.log(username);
+  }, []);
+
   return (
     <div className="lobbyContainer">
       <ChatBar />

@@ -13,9 +13,24 @@ const io = new Server(server, {
     },
   });
 
+  // const userList = [];
+
 
   io.on("connection", (socket)=>{
     console.log(socket.id);
+
+    const test = {id: socket.id};
+
+    socket.on("set_username", (data) => {
+      console.log(data);
+      const newTest = {...test, username: data}
+      io.emit("display_username", data)
+      // userList.push(newTest);
+      // console.log(userList);
+      socket.emit("room_list", newTest)
+    })
+
+
   })
 
   server.listen(3000, () => console.log("server is up"));
