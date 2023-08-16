@@ -1,11 +1,10 @@
 import React from "react";
 import "../styles/LandingPage.css";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { io } from "socket.io-client";
-
+import { useChatContext } from "../context/ChatContext";
 function LandingPage() {
-  const [username, setUsername] = useState("");
+  const { username, setUsername } = useChatContext();
   const socket = io("http://localhost:3000/", { autoConnect: false });
   const navigate = useNavigate();
 

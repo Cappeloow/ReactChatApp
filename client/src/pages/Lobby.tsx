@@ -4,9 +4,8 @@ import ChatBody from "../components/ChatBody";
 import ChatFooter from "../components/ChatFooter";
 import ChatHeader from "../components/ChatHeader";
 import "../styles/Lobby.css";
-type Props = {};
 
-function Lobby({}: Props) {
+function Lobby() {
   return (
     <div className="lobbyContainer">
       <ChatBar />
