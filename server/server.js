@@ -13,15 +13,23 @@ const io = new Server(server, {
     },
   });
 
+  // const userList = [];
+
 
   io.on("connection", (socket)=>{
     console.log(socket.id);
 
-    socket.on("send_username", (data) => {
+    const test = {id: socket.id};
+
+    socket.on("set_username", (data) => {
       console.log(data);
-      
-      io.emit("display_user", data)
+      const newTest = {...test, username: data}
+      io.emit("display_username", data)
+      // userList.push(newTest);
+      // console.log(userList);
+      socket.emit("room_list", newTest)
     })
+
 
   })
 
