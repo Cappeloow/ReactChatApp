@@ -1,3 +1,4 @@
+import { io } from "socket.io-client";
 import {
   createContext,
   useState,
@@ -8,7 +9,9 @@ import {
 
 interface ChatContext {
   username: string;
+  user: string;
   setUsername: React.Dispatch<React.SetStateAction<string>>;
+  connectToServer: (username: string) => Promise<void>;
 }
 
 // export interface User {
@@ -21,17 +24,33 @@ export interface Chat {
 
 const ChatContext = createContext<ChatContext>({
   username: "",
+  user: "",
   setUsername: () => Promise.resolve(),
+  connectToServer: () => Promise.resolve(),
 });
 
 export const useChatContext = () => useContext(ChatContext);
-
 const ChatProvider = ({ children }: PropsWithChildren) => {
+  const socket = io("http://localhost:3000/", { autoConnect: false });
   const [username, setUsername] = useState("");
+  const [user, setUser] = useState("");
+  const connectToServer = (username: string) => {
+    socket.connect();
+    socket.emit("send_username", username);
+  };
+
+  useEffect(() => {
+    socket.on("display_user", (username) => {
+      setUser(username);
+      console.log("retrieve  the username:", username);
+    });
+  }, [socket]);
 
   return (
     <div>
-      <ChatContext.Provider value={{ setUsername, username }}>
+      <ChatContext.Provider
+        value={{ setUsername, username, connectToServer, user }}
+      >
         {children}
       </ChatContext.Provider>
     </div>

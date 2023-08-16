@@ -16,6 +16,13 @@ const io = new Server(server, {
 
   io.on("connection", (socket)=>{
     console.log(socket.id);
+
+    socket.on("send_username", (data) => {
+      console.log(data);
+      
+      io.emit("display_user", data)
+    })
+
   })
 
   server.listen(3000, () => console.log("server is up"));

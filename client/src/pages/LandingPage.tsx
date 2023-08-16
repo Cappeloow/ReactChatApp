@@ -1,21 +1,22 @@
-import React from "react";
 import "../styles/LandingPage.css";
 import { useNavigate } from "react-router-dom";
-import { io } from "socket.io-client";
 import { useChatContext } from "../context/ChatContext";
+
 function LandingPage() {
-  const { username, setUsername } = useChatContext();
-  const socket = io("http://localhost:3000/", { autoConnect: false });
+  const { username, setUsername, connectToServer } = useChatContext();
+  // const socket = io("http://localhost:3000/", { autoConnect: false });
   const navigate = useNavigate();
 
   const handleClick = () => {
     if (username !== "") {
-      socket.connect();
+      //connect();
+      connectToServer(username);
       navigate("/lobby");
     } else {
       console.log("Enter a username");
     }
   };
+
   return (
     <div className="mainContainer">
       <div className="loginForm">
