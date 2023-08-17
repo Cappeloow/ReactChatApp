@@ -24,16 +24,16 @@ io.on("connection", (socket) => {
   socket.on("set_username", (data) => {
     console.log(data);
     io.emit("display_username", data);
-    // const newTest = { ...test, username: data };
-    // userList.push(newTest);
-    // console.log(userList);
-    // io.emit("room_list", userList);
+    //   const newTest = { ...test, username: data };
+    //   userList.push(newTest);
+    //   console.log(userList);
+    //   io.emit("room_list", userList);
   });
 
   socket.on("client_message", (data) => {
     console.log("Received client_message event");
-    console.log("check", data.message);
-    io.sockets.emit("retrieve_message", data.message);
+    console.log("check", data);
+    io.emit("retrieve_message", data.message);
   });
 });
 

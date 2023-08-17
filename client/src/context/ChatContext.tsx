@@ -30,10 +30,9 @@ const ChatContext = createContext<ChatContext>({
   clientMessage: (message: string) => {},
   messages: [],
 });
-
+const socket = io("http://localhost:3000/", { autoConnect: false });
 export const useChatContext = () => useContext(ChatContext);
 const ChatProvider = ({ children }: PropsWithChildren) => {
-  const socket = io("http://localhost:3000/", { autoConnect: false });
   const [username, setUsername] = useState("");
   const [roomList, setRoomList] = useState([]);
   const [messages, setMessages] = useState([]);
