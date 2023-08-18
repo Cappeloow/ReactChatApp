@@ -7,55 +7,84 @@ import {
   useEffect,
 } from "react";
 
+export interface Chat {
+  //***/
+}
+
 interface ChatContext {
   username: string;
   setUsername: React.Dispatch<React.SetStateAction<string>>;
-  connectToServer: (username: string) => Promise<void>;
-}
-
-// export interface User {
-//   username: string;
-// }
-
-export interface Chat {
-  //***/
+  connectToServer: (username: string) => void;
+  clientMessage: (message: Message) => void;
+  messages: Message[];
+  setRoom: React.Dispatch<React.SetStateAction<string>>;
+  room: string;
 }
 
 const ChatContext = createContext<ChatContext>({
   username: "",
   setUsername: () => Promise.resolve(),
   connectToServer: () => Promise.resolve(),
+  clientMessage: (message: Message) => {},
+  messages: [],
+  setRoom: () => {},
+  room: "",
 });
 
+interface Message {
+  author: string;
+  message: string;
+  timestamp: string;
+}
+
+interface Room {
+  participants: string[];
+  messages: Message[];
+}
+
+const socket = io("http://localhost:3000/", { autoConnect: false });
 export const useChatContext = () => useContext(ChatContext);
+
 const ChatProvider = ({ children }: PropsWithChildren) => {
-  const socket = io("http://localhost:3000/", { autoConnect: false });
   const [username, setUsername] = useState("");
-  const [roomList, setRoomList] = useState([]);
-  //   const [user, setUser] = useState("");
+  const [room, setRoom] = useState("");
+  const [messages, setMessages] = useState<Message[]>([]);
+
   const connectToServer = (username: string) => {
     socket.connect();
-    socket.emit("set_username", username);
+    setRoom("lobby");
+    setUsername(username);
+  };
+
+  const clientMessage = (messageData: Message) => {
+    socket.emit("client_message", { messageData, room });
   };
 
   useEffect(() => {
-    socket.on("display_username", (username) => {
-      setUsername(username);
-      console.log("retrieve  the username:", username);
-    });
-  }, [socket]);
+    if (room) {
+      socket.emit("join_room", room);
+    }
+  }, [room]);
 
   useEffect(() => {
-    socket.on("room_list", (userList) => {
-      console.log(userList);
-      setRoomList((prev) => [...prev, userList]);
-      console.log(roomList);
+    socket.on("retrieve_message", (data) => {
+      setMessages([...messages, data]);
     });
-  }, [socket]);
+  }, [socket, messages]);
 
   return (
     <div>
-      <ChatContext.Provider value={{ setUsername, username, connectToServer }}>
+      <ChatContext.Provider
+        value={{
+          setUsername,
+          username,
+          connectToServer,
+          clientMessage,
+          messages,
+          setRoom,
+          room,
+        }}
+      >
         {children}
       </ChatContext.Provider>
     </div>

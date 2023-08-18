@@ -11,7 +11,7 @@ function Lobby() {
   const { username } = useChatContext();
 
   useEffect(() => {
-    console.log(username);
+    console.log("Username from Lobby:", username);
   }, []);
 
   return (

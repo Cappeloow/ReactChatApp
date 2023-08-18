@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useChatContext } from "../context/ChatContext";
 type Props = {};
 
 function ChatBubble({}: Props) {
-  const { username } = useChatContext();
+  const { messages } = useChatContext();
+
   return (
     <div className="chatBubbleContainer">
-      <p>{username}</p>
-      <p>Tja, hur är läget?</p>
-      <p>13:09</p>
+      {messages.map((message, i) => (
+        <div key={i}>
+          <p>{message.author}</p>
+          <p>{message.message}</p>
+          <p>13:09</p>
+        </div>
+      ))}
     </div>
   );
 }

@@ -1,8 +1,9 @@
 import React from "react";
 
 type Props = {};
-
+import { useChatContext } from "../context/ChatContext";
 function ChatBar({}: Props) {
+  const {} = useChatContext();
   return (
     <aside>
       <h1>Chatt App</h1>
