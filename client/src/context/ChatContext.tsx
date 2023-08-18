@@ -19,8 +19,8 @@ interface ChatContext {
   username: string;
   setUsername: React.Dispatch<React.SetStateAction<string>>;
   connectToServer: (username: string) => void;
-  clientMessage: (message: string) => void;
-  messages: string[];
+  clientMessage: (message: Message) => void;
+  messages: Message[];
   setRoom: React.Dispatch<React.SetStateAction<string>>;
   room: string;
 }
@@ -29,7 +29,7 @@ const ChatContext = createContext<ChatContext>({
   username: "",
   setUsername: () => Promise.resolve(),
   connectToServer: () => Promise.resolve(),
-  clientMessage: (message: string) => {},
+  clientMessage: (message: Message) => {},
   messages: [],
   setRoom: () => {},
   room: "",
@@ -52,17 +52,17 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
   const [username, setUsername] = useState("");
   // const [roomList, setRoomList] = useState([]);
   const [room, setRoom] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   //   const [user, setUser] = useState("");
   const connectToServer = (username: string) => {
     socket.connect();
     setRoom("lobby");
-    socket.emit("set_username", { username });
+    setUsername(username);
   };
 
-  const clientMessage = (message: string) => {
-    console.log(message);
-    socket.emit("client_message", { message, room });
+  const clientMessage = (messageData: Message) => {
+    console.log(messageData);
+    socket.emit("client_message", { messageData, room });
   };
 
   useEffect(() => {
@@ -79,13 +79,6 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
       console.log(messages);
     });
   }, [socket, messages]);
-
-  useEffect(() => {
-    socket.on("display_username", (username) => {
-      setUsername(username);
-      console.log("retrieve  the username:", username);
-    });
-  }, [socket]);
 
   // useEffect(() => {
   //   socket.on("room_list", (userList) => {

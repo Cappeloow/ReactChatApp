@@ -3,12 +3,19 @@ import { useChatContext } from "../context/ChatContext";
 type Props = {};
 
 function ChatFooter({}: Props) {
-  const { clientMessage } = useChatContext();
+  const { clientMessage, username } = useChatContext();
   const [msg, setMsg] = useState("");
 
   const handleClick = (e: FormEvent) => {
+    console.log("ser vad vi får:", username);
+    const messageData = {
+      author: username,
+      message: msg,
+      timestamp: "",
+    };
+
     e.preventDefault();
-    clientMessage(msg);
+    clientMessage(messageData);
     setMsg("");
   };
 

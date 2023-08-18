@@ -21,18 +21,18 @@ io.on("connection", (socket) => {
 
   var test = { id: socket.id };
 
-  socket.on("set_username", (data) => {
-    console.log(data);
-    io.emit("display_username", data);
-    //   const newTest = { ...test, username: data };
-    //   userList.push(newTest);
-    //   console.log(userList);
-    //   io.emit("room_list", userList);
-  });
+  // socket.on("set_username", (data) => {
+  //   console.log(data);
+  //   io.emit("display_username", data);
+  //   //   const newTest = { ...test, username: data };
+  //   //   userList.push(newTest);
+  //   //   console.log(userList);
+  //   //   io.emit("room_list", userList);
+  // });
 
   socket.on("client_message", (data) => {
-    const { room, message } = data;
-    io.to(room).emit("retrieve_message", message);
+    const { room, messageData } = data;
+    io.to(room).emit("retrieve_message", messageData);
   });
 
   socket.on("join_room", (room) => {

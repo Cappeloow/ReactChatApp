@@ -13,8 +13,8 @@ function ChatBubble({}: Props) {
     <div className="chatBubbleContainer">
       {messages.map((message, i) => (
         <div key={i}>
-          <p>Användarnamn</p>
-          <p>{message}</p>
+          <p>{message.author}</p>
+          <p>{message.message}</p>
           <p>13:09</p>
         </div>
       ))}

@@ -25,7 +25,7 @@ function ChatHeader({}: Props) {
           </form>
         </dialog>
       ) : null}
-      <button>Lämna Rum</button>
+      <button onClick={() => setRoom("lobby")}>Lämna Rum</button>
     </header>
   );
 }
