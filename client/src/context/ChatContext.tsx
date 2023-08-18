@@ -21,6 +21,8 @@ interface ChatContext {
   connectToServer: (username: string) => void;
   clientMessage: (message: string) => void;
   messages: string[];
+  setRoom: React.Dispatch<React.SetStateAction<string>>;
+  room: string;
 }
 
 const ChatContext = createContext<ChatContext>({
@@ -29,6 +31,8 @@ const ChatContext = createContext<ChatContext>({
   connectToServer: () => Promise.resolve(),
   clientMessage: (message: string) => {},
   messages: [],
+  setRoom: () => {},
+  room: "",
 });
 
 interface Message {
@@ -39,6 +43,7 @@ interface Message {
 
 interface Room {
   participants: string[];
+  messages: Message[];
 }
 
 const socket = io("http://localhost:3000/", { autoConnect: false });
@@ -57,7 +62,7 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
 
   const clientMessage = (message: string) => {
     console.log(message);
-    socket.emit("client_message", { message });
+    socket.emit("client_message", { message, room });
   };
 
   useEffect(() => {
@@ -67,9 +72,10 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
   }, [room]);
 
   useEffect(() => {
-    socket.on("retrieve_message", (message) => {
-      setMessages([...messages, message]);
-      console.log("USEFFECT", message);
+    socket.on("retrieve_message", (data) => {
+      console.log("Check if it works here:", data);
+      setMessages([...messages, data]);
+      console.log("USEFFECT", data);
       console.log(messages);
     });
   }, [socket, messages]);
@@ -98,6 +104,8 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
           connectToServer,
           clientMessage,
           messages,
+          setRoom,
+          room,
         }}
       >
         {children}

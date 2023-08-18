@@ -31,13 +31,17 @@ io.on("connection", (socket) => {
   });
 
   socket.on("client_message", (data) => {
-    console.log("Received client_message event");
-    console.log("check", data);
-    io.emit("retrieve_message", data.message);
+    const { room, message } = data;
+    io.to(room).emit("retrieve_message", message);
   });
 
   socket.on("join_room", (room) => {
+    console.log("funkar?", socket.rooms[1]);
+    const array = Array.from(socket.rooms);
+    console.log("sätt ett meddelande", array[1]);
+    socket.leave(array[1]); // set[1] {"12fsdfsdg3g423", "lobby"}
     socket.join(room);
+    console.log("efter att joina", socket.rooms);
     console.log(io.sockets.adapter.rooms);
   });
 });
