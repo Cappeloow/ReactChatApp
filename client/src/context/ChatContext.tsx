@@ -7,10 +7,6 @@ import {
   useEffect,
 } from "react";
 
-// export interface User {
-//   username: string;
-// }
-
 export interface Chat {
   //***/
 }
@@ -48,12 +44,12 @@ interface Room {
 
 const socket = io("http://localhost:3000/", { autoConnect: false });
 export const useChatContext = () => useContext(ChatContext);
+
 const ChatProvider = ({ children }: PropsWithChildren) => {
   const [username, setUsername] = useState("");
-  // const [roomList, setRoomList] = useState([]);
   const [room, setRoom] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
-  //   const [user, setUser] = useState("");
+
   const connectToServer = (username: string) => {
     socket.connect();
     setRoom("lobby");
@@ -61,7 +57,6 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
   };
 
   const clientMessage = (messageData: Message) => {
-    console.log(messageData);
     socket.emit("client_message", { messageData, room });
   };
 
@@ -73,20 +68,9 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     socket.on("retrieve_message", (data) => {
-      console.log("Check if it works here:", data);
       setMessages([...messages, data]);
-      console.log("USEFFECT", data);
-      console.log(messages);
     });
   }, [socket, messages]);
-
-  // useEffect(() => {
-  //   socket.on("room_list", (userList) => {
-  //     console.log(userList);
-  //     setRoomList(userList);
-  //   });
-  // }, [socket]);
-  // console.log(roomList);
 
   return (
     <div>

@@ -5,10 +5,6 @@ type Props = {};
 function ChatBubble({}: Props) {
   const { messages } = useChatContext();
 
-  useEffect(() => {
-    console.log("TEST!!!", messages);
-  }, [messages]);
-
   return (
     <div className="chatBubbleContainer">
       {messages.map((message, i) => (

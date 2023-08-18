@@ -7,7 +7,6 @@ function ChatFooter({}: Props) {
   const [msg, setMsg] = useState("");
 
   const handleClick = (e: FormEvent) => {
-    console.log("ser vad vi får:", username);
     const messageData = {
       author: username,
       message: msg,
