@@ -30,22 +30,41 @@ const ChatContext = createContext<ChatContext>({
   clientMessage: (message: string) => {},
   messages: [],
 });
+
+interface Message {
+  author: string;
+  message: string;
+  timestamp: string;
+}
+
+interface Room {
+  participants: string[];
+}
+
 const socket = io("http://localhost:3000/", { autoConnect: false });
 export const useChatContext = () => useContext(ChatContext);
 const ChatProvider = ({ children }: PropsWithChildren) => {
   const [username, setUsername] = useState("");
-  const [roomList, setRoomList] = useState([]);
+  // const [roomList, setRoomList] = useState([]);
+  const [room, setRoom] = useState("");
   const [messages, setMessages] = useState([]);
   //   const [user, setUser] = useState("");
   const connectToServer = (username: string) => {
     socket.connect();
-    socket.emit("set_username", username);
+    setRoom("lobby");
+    socket.emit("set_username", { username });
   };
 
   const clientMessage = (message: string) => {
     console.log(message);
     socket.emit("client_message", { message });
   };
+
+  useEffect(() => {
+    if (room) {
+      socket.emit("join_room", room);
+    }
+  }, [room]);
 
   useEffect(() => {
     socket.on("retrieve_message", (message) => {
@@ -62,13 +81,13 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
     });
   }, [socket]);
 
-  useEffect(() => {
-    socket.on("room_list", (userList) => {
-      console.log(userList);
-      setRoomList(userList);
-    });
-  }, [socket]);
-  console.log(roomList);
+  // useEffect(() => {
+  //   socket.on("room_list", (userList) => {
+  //     console.log(userList);
+  //     setRoomList(userList);
+  //   });
+  // }, [socket]);
+  // console.log(roomList);
 
   return (
     <div>

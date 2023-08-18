@@ -35,6 +35,11 @@ io.on("connection", (socket) => {
     console.log("check", data);
     io.emit("retrieve_message", data.message);
   });
+
+  socket.on("join_room", (room) => {
+    socket.join(room);
+    console.log(io.sockets.adapter.rooms);
+  });
 });
 
 // io.sockets.on("client_message", (data) => {
