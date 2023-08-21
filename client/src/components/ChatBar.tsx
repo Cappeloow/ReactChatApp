@@ -1,4 +1,5 @@
 import React from "react";
+import "../styles/ChatBar.css";
 
 type Props = {};
 import { useChatContext } from "../context/ChatContext";

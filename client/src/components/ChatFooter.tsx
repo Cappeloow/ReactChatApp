@@ -1,5 +1,6 @@
 import { FormEvent, useState } from "react";
 import { useChatContext } from "../context/ChatContext";
+import "../styles/ChatFooter.css";
 type Props = {};
 
 function ChatFooter({}: Props) {
@@ -19,8 +20,8 @@ function ChatFooter({}: Props) {
   };
 
   return (
-    <div>
-      <form onSubmit={handleClick}>
+    <div className="footer">
+      <form onSubmit={handleClick} className="formContainer">
         <input
           value={msg}
           onChange={(e) => setMsg(e.target.value)}
