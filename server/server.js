@@ -27,16 +27,24 @@ io.on("connection", (socket) => {
 
   socket.on("join_room", (room) => {
     let existingRoom = roomList.find((r) => r.name === room);
-    
-    
+  
+    roomList.forEach((r) => {
 
+      //här tar vi bort usern från förra rummet den var i
+      if (r.participants.includes(socket.id) && r.name !== room) {
+        r.participants = r.participants.filter((id) => id !== socket.id);
+        // ta bort hela rummet om det inte finns någon där!
+        if (r.participants.length === 0) {
+          const indexToRemove = roomList.findIndex((room) => room.name === r.name);
+          if (indexToRemove !== -1) {
+            roomList.splice(indexToRemove, 1);
+          }
+        }
+      }
+    });
+  
     if (existingRoom) {
       socket.leaveAll();
-      roomList.forEach((r) => {
-        if (r.participants.includes(socket.id)) {
-          r.participants = r.participants.filter((id) => id !== socket.id);
-        }
-      });
       socket.join(room);
       existingRoom.participants.push(socket.id);
       console.log("Joined", room);
@@ -50,10 +58,11 @@ io.on("connection", (socket) => {
       roomList.push(newRoom);
       console.log("Created", newRoom);
     }
-    
+  
     console.log(roomList);
-    io.emit("room_list", (roomList)); 
+    io.emit("room_list", roomList);
   });
+  
 });
 
 server.listen(3000, () => console.log("Server is up"));
