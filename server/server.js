@@ -33,7 +33,6 @@ io.on("connection", (socket) => {
       socket.join(room);
       existingRoom.participants.push(socket.id);
       console.log("Joined", room);
-      console.log(existingRoom);
     } else {
       socket.leaveAll();
       socket.join(room);
@@ -44,7 +43,7 @@ io.on("connection", (socket) => {
       roomList.push(newRoom);
       console.log("Created", newRoom);
     }
-
+    console.log(roomList);
     io.emit("room_list", (roomList)); // Sending room names to clients
   });
 });

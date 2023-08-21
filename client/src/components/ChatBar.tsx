@@ -9,15 +9,22 @@ function ChatBar({}: Props) {
   return (
     <aside>
       <h1>Chatt App</h1>
-      <h2>
+      <p>
         Rum:
         {roomList.map((room, i) => (
           <ul key={i}>
-            <li onClick={() => setRoom(room)}>{room.name}</li>
+            <li onClick={() => setRoom(room.name)}>{room.name}</li>
           </ul>
         ))}
-      </h2>
-      <h3>Rumnamn</h3>
+      </p>
+      <p>medlemmar</p>
+      <div>
+        {roomList.map((room, i) => (
+          <ul key={i}>
+            <li>{room.participants}</li>
+          </ul>
+        ))}
+      </div>
     </aside>
   );
 }

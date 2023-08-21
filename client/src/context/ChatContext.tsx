@@ -40,8 +40,8 @@ interface Message {
 }
 
 interface Room {
+  name: "";
   participants: string[];
-  messages: Message[];
 }
 
 const socket = io("http://localhost:3000/", { autoConnect: false });
@@ -51,7 +51,7 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
   const [username, setUsername] = useState("");
   const [room, setRoom] = useState("lobby");
   const [messages, setMessages] = useState<Message[]>([]);
-  const [roomList, setRoomList] = useState([]);
+  const [roomList, setRoomList] = useState<Room[]>([]);
   const connectToServer = (username: string) => {
     socket.connect();
     setRoom("lobby");
