@@ -27,9 +27,16 @@ io.on("connection", (socket) => {
 
   socket.on("join_room", (room) => {
     let existingRoom = roomList.find((r) => r.name === room);
+    
+    
 
     if (existingRoom) {
-      socket.leaveAll(); // Leave all existing rooms
+      socket.leaveAll();
+      roomList.forEach((r) => {
+        if (r.participants.includes(socket.id)) {
+          r.participants = r.participants.filter((id) => id !== socket.id);
+        }
+      });
       socket.join(room);
       existingRoom.participants.push(socket.id);
       console.log("Joined", room);
@@ -43,8 +50,9 @@ io.on("connection", (socket) => {
       roomList.push(newRoom);
       console.log("Created", newRoom);
     }
+    
     console.log(roomList);
-    io.emit("room_list", (roomList)); // Sending room names to clients
+    io.emit("room_list", (roomList)); 
   });
 });
 
