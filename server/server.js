@@ -20,31 +20,33 @@ const roomList = [];
 io.on("connection", (socket) => {
   console.log(socket.id);
 
-  var test = { id: socket.id };
-
   socket.on("client_message", (data) => {
     const { room, messageData } = data;
     io.to(room).emit("retrieve_message", messageData);
   });
 
   socket.on("join_room", (room) => {
-    const array = Array.from(socket.rooms);
-    roomList.push(room);
-    const roomSet = new Set(roomList);
-    const roomArray = [...roomSet];
-    if (roomArray.includes(room)) {
-      console.log("joined", room);
+    let existingRoom = roomList.find((r) => r.name === room);
+
+    if (existingRoom) {
+      socket.leaveAll(); // Leave all existing rooms
       socket.join(room);
+      existingRoom.participants.push(socket.id);
+      console.log("Joined", room);
+      console.log(existingRoom);
     } else {
-      console.log("create", room);
-      socket.leave(array[1]);
+      socket.leaveAll();
       socket.join(room);
+      const newRoom = {
+        name: room,
+        participants: [socket.id],
+      };
+      roomList.push(newRoom);
+      console.log("Created", newRoom);
     }
-    io.emit('room_list', (roomArray))
 
-
+    io.emit("room_list", (roomList)); // Sending room names to clients
   });
-
 });
 
-server.listen(3000, () => console.log("server is up"));
+server.listen(3000, () => console.log("Server is up"));

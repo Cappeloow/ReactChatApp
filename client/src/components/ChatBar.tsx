@@ -13,7 +13,7 @@ function ChatBar({}: Props) {
         Rum:
         {roomList.map((room, i) => (
           <ul key={i}>
-            <li onClick={() => setRoom(room)}>{room}</li>
+            <li onClick={() => setRoom(room)}>{room.name}</li>
           </ul>
         ))}
       </h2>
