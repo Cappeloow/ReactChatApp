@@ -12,7 +12,7 @@ function ChatBubble({}: Props) {
         <div key={i}>
           <div className="info">
             <p>{message.author}</p>
-            <p>13:09</p>
+            <p>{message.timestamp}</p>
           </div>
           <div className="bubble">
             <p>{message.message}</p>
