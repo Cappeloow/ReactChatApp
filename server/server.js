@@ -29,20 +29,22 @@ io.on("connection", (socket) => {
 
   socket.on("join_room", (room) => {
     const array = Array.from(socket.rooms);
-    socket.leave(array[1]); // set[1] {"12fsdfsdg3g423", "lobby"}
-    socket.join(room);
+    roomList.push(room);
+    const roomSet = new Set(roomList);
+    const roomArray = [...roomSet];
+    if (roomArray.includes(room)) {
+      console.log("joined", room);
+      socket.join(room);
+    } else {
+      console.log("create", room);
+      socket.leave(array[1]);
+      socket.join(room);
+    }
+    io.emit('room_list', (roomArray))
+
+
   });
 
-  socket.on("create_room", (room) => {
-    roomList.push(room);
-    console.log(roomList);
-    const roomSet = new Set(roomList);
-    console.log(roomSet);
-    const roomArray = [...roomSet];
-    console.log(roomArray);
-    io.emit('room_list', (roomArray))
-    console.log("Does this emit work?");
-  })
 });
 
 server.listen(3000, () => console.log("server is up"));

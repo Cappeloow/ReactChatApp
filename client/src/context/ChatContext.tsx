@@ -59,7 +59,7 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
   };
 
   const roomToList = (room) => {
-    socket.emit("create_room", room);
+    socket.emit("join_room", room);
   };
 
   useEffect(() => {
