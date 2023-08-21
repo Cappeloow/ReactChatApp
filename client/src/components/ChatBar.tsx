@@ -4,7 +4,7 @@ import "../styles/ChatBar.css";
 type Props = {};
 import { useChatContext } from "../context/ChatContext";
 function ChatBar({}: Props) {
-  const { roomList } = useChatContext();
+  const { roomList, setRoom } = useChatContext();
   console.log(roomList);
   return (
     <aside>
@@ -12,7 +12,9 @@ function ChatBar({}: Props) {
       <h2>
         Rum:
         {roomList.map((room, i) => (
-          <div key={i}>{room}</div>
+          <ul key={i}>
+            <li onClick={() => setRoom(room)}>{room}</li>
+          </ul>
         ))}
       </h2>
       <h3>Rumnamn</h3>
