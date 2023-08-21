@@ -1,0 +1,24 @@
+.chatBubbleContainer {
+  display: flex;
+  flex-direction: column;
+  max-width: 50%;
+  min-width: 10%;
+  margin-left: 5px;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  height: 2rem;
+  margin-bottom: 3px;
+}
+
+.bubble {
+  background-color: rgb(98, 185, 236);
+  margin: 0px;
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
+  border-radius: 7px;
+  padding-left: 4px;
+}

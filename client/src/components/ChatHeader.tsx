@@ -14,18 +14,20 @@ function ChatHeader({}: Props) {
   return (
     <header>
       <h1>{room}</h1>
-      <button onClick={() => setShowModal(true)}>Skapa Rum</button>
-      {showModal ? (
-        <dialog open>
-          <button onClick={() => setShowModal(false)}>X</button>
-          <p>Skapa ett rum</p>
-          <form method="dialog">
-            <input type="text" onChange={(e) => setNewRoom(e.target.value)} />
-            <button onClick={handelClick}>OK</button>
-          </form>
-        </dialog>
-      ) : null}
-      <button onClick={() => setRoom("lobby")}>Lämna Rum</button>
+      <div className="button-container">
+        <button onClick={() => setShowModal(true)}>Skapa Rum</button>
+        {showModal ? (
+          <dialog open>
+            <button onClick={() => setShowModal(false)}>X</button>
+            <p>Skapa ett rum</p>
+            <form method="dialog">
+              <input type="text" onChange={(e) => setNewRoom(e.target.value)} />
+              <button onClick={handelClick}>OK</button>
+            </form>
+          </dialog>
+        ) : null}
+        <button onClick={() => setRoom("lobby")}>Lämna Rum</button>
+      </div>
     </header>
   );
 }

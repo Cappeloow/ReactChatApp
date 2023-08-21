@@ -1,0 +1,10 @@
+aside {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+aside h1 {
+  display: flex;
+  margin-top: 0.5rem;
+}
