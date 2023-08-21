@@ -34,7 +34,7 @@ io.on("connection", (socket) => {
       if (r.participants.includes(socket.id) && r.name !== room) {
         r.participants = r.participants.filter((id) => id !== socket.id);
         // ta bort hela rummet om det inte finns någon där!
-        if (r.participants.length === 0) {
+        if (r.participants.length === 0 && r.name !== "lobby") {
           const indexToRemove = roomList.findIndex((room) => room.name === r.name);
           if (indexToRemove !== -1) {
             roomList.splice(indexToRemove, 1);
