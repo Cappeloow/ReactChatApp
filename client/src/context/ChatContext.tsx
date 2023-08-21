@@ -19,6 +19,7 @@ interface ChatContext {
   messages: Message[];
   setRoom: React.Dispatch<React.SetStateAction<string>>;
   room: string;
+  roomList: [];
 }
 
 const ChatContext = createContext<ChatContext>({
@@ -29,6 +30,7 @@ const ChatContext = createContext<ChatContext>({
   messages: [],
   setRoom: () => {},
   room: "",
+  roomList: [],
 });
 
 interface Message {
@@ -47,14 +49,22 @@ export const useChatContext = () => useContext(ChatContext);
 
 const ChatProvider = ({ children }: PropsWithChildren) => {
   const [username, setUsername] = useState("");
-  const [room, setRoom] = useState("");
+  const [room, setRoom] = useState("lobby");
   const [messages, setMessages] = useState<Message[]>([]);
-
+  const [roomList, setRoomList] = useState([]);
   const connectToServer = (username: string) => {
     socket.connect();
     setRoom("lobby");
     setUsername(username);
   };
+
+  const roomToList = (room) => {
+    socket.emit("create_room", room);
+  };
+
+  useEffect(() => {
+    roomToList(room);
+  }, [room]);
 
   const clientMessage = (messageData: Message) => {
     socket.emit("client_message", { messageData, room });
@@ -72,6 +82,13 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
     });
   }, [socket, messages]);
 
+  useEffect(() => {
+    socket.on("room_list", (roomList) => {
+      console.log(roomList);
+      setRoomList(roomList);
+    });
+  }, [socket]);
+
   return (
     <div>
       <ChatContext.Provider
@@ -83,6 +100,7 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
           messages,
           setRoom,
           room,
+          roomList,
         }}
       >
         {children}

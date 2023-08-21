@@ -15,6 +15,7 @@ const io = new Server(server, {
 });
 
 const userList = [];
+const roomList = [];
 
 io.on("connection", (socket) => {
   console.log(socket.id);
@@ -31,6 +32,17 @@ io.on("connection", (socket) => {
     socket.leave(array[1]); // set[1] {"12fsdfsdg3g423", "lobby"}
     socket.join(room);
   });
+
+  socket.on("create_room", (room) => {
+    roomList.push(room);
+    console.log(roomList);
+    const roomSet = new Set(roomList);
+    console.log(roomSet);
+    const roomArray = [...roomSet];
+    console.log(roomArray);
+    io.emit('room_list', (roomArray))
+    console.log("Does this emit work?");
+  })
 });
 
 server.listen(3000, () => console.log("server is up"));
