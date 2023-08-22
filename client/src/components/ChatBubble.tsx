@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { useChatContext } from "../context/ChatContext";
 import "../styles/ChatBubble.css";
 type Props = {};

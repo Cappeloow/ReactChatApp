@@ -18,13 +18,12 @@ const userList = [];
 const roomList = [];
 
 io.on("connection", (socket) => {
-  console.log(socket.id);
-  socket.username;
+  console.log("User has connected with id:", socket.id);
+
   socket.on("username_input", (username) => {
     socket.username = username;
   });
 
-  // console.log(socket.username);
   socket.on("client_message", (data) => {
     const { room, messageData } = data;
     io.to(room).emit("retrieve_message", messageData);
@@ -35,8 +34,8 @@ io.on("connection", (socket) => {
 
     roomList.forEach((r) => {
       //här tar vi bort usern från förra rummet den var i
-      if (r.participants.includes(socket.id) && r.name !== room) {
-        r.participants = r.participants.filter((id) => id !== socket.id);
+      if (r.participants.includes(socket.username) && r.name !== room) {
+        r.participants = r.participants.filter((id) => id !== socket.username);
         // ta bort hela rummet om det inte finns någon där!
         if (r.participants.length === 0 && r.name !== "lobby") {
           const indexToRemove = roomList.findIndex(
@@ -53,14 +52,14 @@ io.on("connection", (socket) => {
     if (existingRoom) {
       socket.leaveAll();
       socket.join(room);
-      existingRoom.participants.push(socket.id);
+      existingRoom.participants.push(socket.username);
       console.log("Joined", room);
     } else {
       socket.leaveAll();
       socket.join(room);
       const newRoom = {
         name: room,
-        participants: [socket.id],
+        participants: [socket.username],
       };
       roomList.push(newRoom);
       console.log("Created", newRoom);
