@@ -20,6 +20,8 @@ interface ChatContext {
   setRoom: React.Dispatch<React.SetStateAction<string>>;
   room: string;
   roomList: [];
+  setIsTyping: React.Dispatch<React.SetStateAction<boolean>>;
+  isTyping: boolean;
 }
 
 const ChatContext = createContext<ChatContext>({
@@ -31,6 +33,8 @@ const ChatContext = createContext<ChatContext>({
   setRoom: () => {},
   room: "",
   roomList: [],
+  setIsTyping: Boolean,
+  isTyping: Boolean,
 });
 
 interface Message {
@@ -52,6 +56,9 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
   const [room, setRoom] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [roomList, setRoomList] = useState<Room[]>([]);
+  const [isTyping, setIsTyping] = useState(false);
+
+  console.log(isTyping);
 
   const connectToServer = (username: string) => {
     setRoom("lobby");
@@ -83,6 +90,12 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
     });
   }, [socket]);
 
+  useEffect(() => {
+    // if (isTyping) {
+    socket.emit("client_typing", { room, username, isTyping });
+    // }
+  }, [isTyping]);
+
   return (
     <div>
       <ChatContext.Provider
@@ -95,6 +108,8 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
           setRoom,
           room,
           roomList,
+          setIsTyping,
+          isTyping,
         }}
       >
         {children}

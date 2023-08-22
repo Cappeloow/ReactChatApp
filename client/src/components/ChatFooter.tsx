@@ -4,7 +4,7 @@ import "../styles/ChatFooter.css";
 type Props = {};
 
 function ChatFooter({}: Props) {
-  const { clientMessage, username } = useChatContext();
+  const { clientMessage, username, setIsTyping, isTyping } = useChatContext();
   const [msg, setMsg] = useState("");
 
   const handleClick = (e: FormEvent) => {
@@ -25,10 +25,40 @@ function ChatFooter({}: Props) {
     setMsg("");
   };
 
+  const handleKeyDown = () => {
+    setIsTyping(true);
+
+    const testTimeOut = setTimeout(() => {
+      console.log("test timeout");
+    }, 1000);
+
+    clearTimeout(testTimeOut);
+
+    // setTimeout(() => {
+    //   // if här
+    //   if (isTyping) {
+    //     setIsTyping(false);
+    //   }
+    //   // console.log("time is over");
+    //   // setIsTyping(false);
+    // }, 1000);
+
+    // if (isTyping) {
+    //   setTimeout(() => {
+    //     setIsTyping(false);
+    //   }, 1000);
+    // }
+
+    // setInterval(() => {
+    //   console.log("interval");
+    // }, 1000);
+  };
+
   return (
     <div className="footer">
       <form onSubmit={handleClick} className="formContainer">
         <input
+          onKeyDown={handleKeyDown}
           value={msg}
           onChange={(e) => setMsg(e.target.value)}
           placeholder="Write message"
