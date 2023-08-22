@@ -24,7 +24,7 @@ io.on("connection", (socket) => {
     socket.username = username;
   });
 
-  console.log(socket.username);
+  // console.log(socket.username);
   socket.on("client_message", (data) => {
     const { room, messageData } = data;
     io.to(room).emit("retrieve_message", messageData);

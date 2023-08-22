@@ -49,23 +49,25 @@ export const useChatContext = () => useContext(ChatContext);
 
 const ChatProvider = ({ children }: PropsWithChildren) => {
   const [username, setUsername] = useState("");
-  const [room, setRoom] = useState("lobby");
+  const [room, setRoom] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [roomList, setRoomList] = useState<Room[]>([]);
+
   const connectToServer = (username: string) => {
-    socket.connect();
     setRoom("lobby");
+    socket.connect();
+    // setRoom("lobby!");
+    // setUsername(username);
     socket.emit("username_input", username);
-    setUsername(username);
   };
 
-  const roomToList = (room) => {
-    socket.emit("join_room", room);
-  };
+  // const roomToList = (room) => {
+  //   socket.emit("join_room", room);
+  // };
 
-  useEffect(() => {
-    roomToList(room);
-  }, [room]);
+  // useEffect(() => {
+  //   roomToList(room);
+  // }, [room]);
 
   const clientMessage = (messageData: Message) => {
     socket.emit("client_message", { messageData, room });
