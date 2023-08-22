@@ -15,11 +15,14 @@ const io = new Server(server, {
 });
 
 const userList = [];
+const roomList = [];
 
 io.on("connection", (socket) => {
-  console.log(socket.id);
+  console.log("User has connected with id:", socket.id);
 
-  var test = { id: socket.id };
+  socket.on("username_input", (username) => {
+    socket.username = username;
+  });
 
   socket.on("client_message", (data) => {
     const { room, messageData } = data;
@@ -27,10 +30,50 @@ io.on("connection", (socket) => {
   });
 
   socket.on("join_room", (room) => {
-    const array = Array.from(socket.rooms);
-    socket.leave(array[1]); // set[1] {"12fsdfsdg3g423", "lobby"}
-    socket.join(room);
+    let existingRoom = roomList.find((r) => r.name === room);
+
+    roomList.forEach((r) => {
+      //här tar vi bort usern från förra rummet den var i
+      if (r.participants.includes(socket.username) && r.name !== room) {
+        r.participants = r.participants.filter((id) => id !== socket.username);
+        // ta bort hela rummet om det inte finns någon där!
+        if (r.participants.length === 0 && r.name !== "lobby") {
+          const indexToRemove = roomList.findIndex(
+            (room) => room.name === r.name
+          );
+          if (indexToRemove !== -1) {
+            roomList.splice(indexToRemove, 1);
+          }
+        }
+      }
+    });
+
+    console.log("the name of the socket:", socket.username);
+    if (existingRoom) {
+      socket.leaveAll();
+      socket.join(room);
+      existingRoom.participants.push(socket.username);
+      console.log("Joined", room);
+    } else {
+      socket.leaveAll();
+      socket.join(room);
+      const newRoom = {
+        name: room,
+        participants: [socket.username],
+      };
+      roomList.push(newRoom);
+      console.log("Created", newRoom);
+    }
+
+    roomList.forEach((r) => {
+      const updatedParticipantList = new Set(r.participants);
+      const participantsArray = Array.from(updatedParticipantList);
+      r.participants = participantsArray;
+    });
+
+    console.log(roomList);
+    io.emit("room_list", roomList);
   });
 });
 
-server.listen(3000, () => console.log("server is up"));
+server.listen(3000, () => console.log("Server is up"));
