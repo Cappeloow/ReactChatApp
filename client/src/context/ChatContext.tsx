@@ -55,6 +55,7 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
   const connectToServer = (username: string) => {
     socket.connect();
     setRoom("lobby");
+    socket.emit("username_input", username);
     setUsername(username);
   };
 
