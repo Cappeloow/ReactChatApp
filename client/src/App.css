@@ -8,3 +8,10 @@
   height: 100vh;
   font-family: "Open Sans", sans-serif;
 }
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-weight: bold;
+}
