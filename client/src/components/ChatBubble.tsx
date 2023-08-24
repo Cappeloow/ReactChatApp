@@ -7,7 +7,7 @@ function ChatBubble({}: Props) {
   const { messages, username } = useChatContext();
 
   return (
-    <div className="chatBubbleContainer">
+    <div className="ChatBodyBorder">
       <ScrollToBottom className="chatBubbleContainer">
         {messages.map((message, i) => (
           <div key={i} id={username === message.author ? "you" : "other"}>

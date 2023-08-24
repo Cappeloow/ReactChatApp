@@ -23,8 +23,13 @@
   align-items: center;
   border-radius: 7px;
   padding-left: 4px;
-  min-width: 55%;
+  max-width: 55%;
   margin-bottom: 10px;
+}
+.bubble > p {
+  width:100%;
+  min-height:100%;
+  word-break: break-word;
 }
 
 #you {

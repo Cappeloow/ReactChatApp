@@ -42,7 +42,7 @@ function ChatFooter({}: Props) {
       <form onSubmit={handleClick} className="formContainer">
         {!isGif ? (
           <>
-            <input
+            <textarea
               value={msg}
               onChange={(e) => {
                 setMsg(e.target.value);
