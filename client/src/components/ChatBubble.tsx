@@ -1,23 +1,26 @@
 import { useChatContext } from "../context/ChatContext";
+import ScrollToBottom from "react-scroll-to-bottom";
 import "../styles/ChatBubble.css";
 type Props = {};
 
 function ChatBubble({}: Props) {
-  const { messages } = useChatContext();
+  const { messages, username } = useChatContext();
 
   return (
     <div className="chatBubbleContainer">
-      {messages.map((message, i) => (
-        <div key={i}>
-          <div className="info">
-            <p>{message.author}</p>
-            <p>{message.timestamp}</p>
+      <ScrollToBottom className="chatBubbleContainer">
+        {messages.map((message, i) => (
+          <div key={i} id={username === message.author ? "you" : "other"}>
+            <div className="info">
+              <p>{message.author}</p>
+              <p>{message.timestamp}</p>
+            </div>
+            <div className="bubble">
+              <p>{message.message}</p>
+            </div>
           </div>
-          <div className="bubble">
-            <p>{message.message}</p>
-          </div>
-        </div>
-      ))}
+        ))}
+      </ScrollToBottom>
     </div>
   );
 }
