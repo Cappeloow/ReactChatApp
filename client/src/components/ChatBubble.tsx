@@ -16,7 +16,11 @@ function ChatBubble({}: Props) {
               <p>{message.timestamp}</p>
             </div>
             <div className="bubble">
-              <p>{message.message}</p>
+              {message.message.startsWith("https://") ? (
+                <img src={message.message} alt="Image" height={100} />
+              ) : (
+                <p>{message.message}</p>
+              )}
             </div>
           </div>
         ))}
