@@ -7,6 +7,8 @@ function ChatFooter({}: Props) {
   const { clientMessage, username } = useChatContext();
   const [msg, setMsg] = useState("");
   const [gif, setGif] = useState();
+  const [isGif, setIsGif] = useState(false);
+
   const handleClick = (e: FormEvent) => {
     const currentTime = new Date();
 
@@ -22,6 +24,7 @@ function ChatFooter({}: Props) {
     e.preventDefault();
     clientMessage(messageData);
     setMsg("");
+    setIsGif(false);
   };
 
   async function fetchData() {
@@ -37,18 +40,28 @@ function ChatFooter({}: Props) {
   return (
     <div className="footer">
       <form onSubmit={handleClick} className="formContainer">
-        <input
-          value={msg}
-          onChange={(e) => {
-            setMsg(e.target.value);
-            if (e.target.value === "/gif") {
-              const data = fetchData();
-              setGif(data);
-            }
-          }}
-          placeholder="Write message"
-          type="text"
-        />
+        {!isGif ? (
+          <>
+            <input
+              value={msg}
+              onChange={(e) => {
+                setMsg(e.target.value);
+                if (e.target.value === "/gif") {
+                  const data = fetchData();
+                  setGif(data);
+                  setIsGif(true);
+                }
+              }}
+              placeholder="Write message"
+              type="text"
+            />
+          </>
+        ) : null}
+        {isGif ? (
+          <>
+            <img src={msg} height={100} alt="" />
+          </>
+        ) : null}
         <button>Send</button>
       </form>
     </div>
