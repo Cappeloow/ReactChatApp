@@ -11,10 +11,7 @@ function ChatFooter({}: Props) {
   const handleClick = (e: FormEvent) => {
     const currentTime = new Date();
 
-    // console.log(currentTime.getHours());
-    // console.log(currentTime.getMinutes());
-
-    const time = currentTime.getHours() + ":" + currentTime.getMinutes();
+    const time = currentTime.getHours() + ":" + currentTime.getMinutes().toString().padStart(2, "0");
     const messageData = {
       author: username,
       message: msg,
