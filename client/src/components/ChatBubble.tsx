@@ -3,10 +3,11 @@ import "../styles/ChatBubble.css";
 type Props = {};
 
 function ChatBubble({}: Props) {
-  const { messages } = useChatContext();
+  const { messages, isTheyTyping } = useChatContext();
 
   return (
     <div className="chatBubbleContainer">
+
       {messages.map((message, i) => (
         <div key={i}>
           <div className="info">
@@ -18,6 +19,9 @@ function ChatBubble({}: Props) {
           </div>
         </div>
       ))}
+
+      <p>{isTheyTyping.typing? (`${isTheyTyping.username} 💬`) : ""}</p>
+      
     </div>
   );
 }
