@@ -20,8 +20,10 @@ interface ChatContext {
   setRoom: React.Dispatch<React.SetStateAction<string>>;
   room: string;
   roomList: [];
-  setIsTyping: React.Dispatch<React.SetStateAction<boolean>>;
-  isTyping: boolean;
+  setIsMeTyping: React.Dispatch<React.SetStateAction<boolean>>;
+  isMeTyping: boolean;
+  isTheyTyping: {};
+  setIsTheyTyping: {};
 }
 
 const ChatContext = createContext<ChatContext>({
@@ -33,8 +35,10 @@ const ChatContext = createContext<ChatContext>({
   setRoom: () => {},
   room: "",
   roomList: [],
-  setIsTyping: Boolean,
-  isTyping: Boolean,
+  setIsMeTyping: Boolean,
+  isMeTyping: false,
+  isTheyTyping: {},
+  setIsTheyTyping: {},
 });
 
 interface Message {
@@ -56,9 +60,10 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
   const [room, setRoom] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [roomList, setRoomList] = useState<Room[]>([]);
-  const [isTyping, setIsTyping] = useState(false);
+  const [isMeTyping, setIsMeTyping] = useState(false);
+  const [isTheyTyping, setIsTheyTyping] = useState({username: "", typing: false});
 
-  console.log(isTyping);
+  console.log("isMeTyping:", isMeTyping);
 
   const connectToServer = (username: string) => {
     setRoom("lobby");
@@ -91,10 +96,15 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
   }, [socket]);
 
   useEffect(() => {
-    // if (isTyping) {
-    socket.emit("client_typing", { room, username, isTyping });
-    // }
-  }, [isTyping]);
+    socket.emit("client_typing", { room, username, isMeTyping });
+  }, [isMeTyping]);
+
+  useEffect(() => {
+    socket.on("they_typing", (name, typing) => {
+      console.log(name, typing);
+      setIsTheyTyping({username: name, typing: typing});
+    });
+  }, [socket]);
 
   return (
     <div>
@@ -108,8 +118,10 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
           setRoom,
           room,
           roomList,
-          setIsTyping,
-          isTyping,
+          setIsMeTyping,
+          isMeTyping,
+          isTheyTyping,
+          setIsTheyTyping,
         }}
       >
         {children}
