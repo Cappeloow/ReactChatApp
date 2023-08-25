@@ -29,7 +29,9 @@ function ChatFooter({}: Props) {
 
   async function fetchData() {
     const response = await fetch(
-      "https://api.giphy.com/v1/stickers/random?api_key=LLpks0CtHAogXzGUi9w2gUh3f92qUP1w&tag=&rating=g"
+      `https://api.giphy.com/v1/stickers/random?api_key=${
+        import.meta.env.VITE_API_KEY
+      }&tag=&rating=g`
     );
     const data = await response.json();
     console.log(data);
