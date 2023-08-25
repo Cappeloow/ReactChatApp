@@ -24,6 +24,13 @@ io.on("connection", (socket) => {
     socket.username = username;
   });
 
+  socket.on("client_typing", (data) => {
+    const { room, username, isMeTyping } = data;
+    console.log("client_typing:", data);
+    // socket.to(room).emit("they_typing", username, isMeTyping); // Not sure which (socket.to or io.to) to use since both seem to give same result
+    io.to(room).emit("they_typing", username, isMeTyping); // Read comment above
+  });
+
   socket.on("client_message", (data) => {
     const { room, messageData } = data;
     io.to(room).emit("retrieve_message", messageData);
