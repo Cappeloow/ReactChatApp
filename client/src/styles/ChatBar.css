@@ -8,3 +8,9 @@ aside h1 {
   display: flex;
   margin-top: 0.5rem;
 }
+
+aside h2 {
+  display: flex;
+  margin-top: 0.5rem;
+  justify-content: center;
+}

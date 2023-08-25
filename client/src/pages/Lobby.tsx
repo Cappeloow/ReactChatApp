@@ -5,7 +5,7 @@ import ChatFooter from "../components/ChatFooter";
 import ChatHeader from "../components/ChatHeader";
 import "../styles/Lobby.css";
 import { useChatContext } from "../context/ChatContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 function Lobby() {
