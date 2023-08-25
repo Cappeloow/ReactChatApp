@@ -14,20 +14,29 @@ const io = new Server(server, {
   },
 });
 
+
 const userList = [];
+
+
+app.get('/getUsers', (req, res) => {
+  res.json(userList);
+})
+
 const roomList = [];
 
 io.on("connection", (socket) => {
   console.log("User has connected with id:", socket.id);
+  
+  
   socket.on("username_input", (username) => {
-    if (userList.find((user) => user === username)) {
-      socket.emit("username_taken");
-      io.emit('list_of_users', userList); // Emit updated user list to all clients
-    } else {
+    // if (userList.find((user) => user === username)) {
+    //   socket.emit("username_taken");
+    //   io.emit('list_of_users', userList); 
+    // } else {
       socket.username = username;
       userList.push(username);
-      io.emit('list_of_users', userList); // Emit updated user list to all clients
-    }
+    //   io.emit('list_of_users', userList); 
+    // }
   });
 
   socket.on("client_message", (data) => {

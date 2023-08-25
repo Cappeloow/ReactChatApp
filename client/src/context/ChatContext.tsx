@@ -54,6 +54,8 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
   const [roomList, setRoomList] = useState<Room[]>([]);
   const [usernameList, setUsernameList] = useState<string[]>([]);
 
+  const checkUser = (username: string) => {};
+
   const connectToServer = (username: string) => {
     socket.connect();
     console.log(usernameList);
