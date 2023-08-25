@@ -60,17 +60,36 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
   const [room, setRoom] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [roomList, setRoomList] = useState<Room[]>([]);
+  const [usernameList, setUsernameList] = useState<string[]>([]);
   const [isMeTyping, setIsMeTyping] = useState(false);
-  const [isTheyTyping, setIsTheyTyping] = useState({username: "", typing: false});
+  const [isTheyTyping, setIsTheyTyping] = useState({
+    username: "",
+    typing: false,
+  });
 
   console.log("isMeTyping:", isMeTyping);
 
   const connectToServer = (username: string) => {
-    setRoom("lobby");
     socket.connect();
-
+    console.log(usernameList);
+    console.log("this is the username:", username);
     socket.emit("username_input", username);
+    setRoom("lobby");
   };
+
+  useEffect(() => {
+    socket.on("list_of_users", (userList) => {
+      setUsernameList(userList);
+      console.log("Updated user list:", userList);
+    });
+  }, [socket]);
+
+  useEffect(() => {
+    socket.on("username_taken", () => {
+      console.log("Username is taken. Please choose a different username.");
+      setUsername("");
+    });
+  }, [socket]);
 
   const clientMessage = (messageData: Message) => {
     socket.emit("client_message", { messageData, room });
@@ -102,7 +121,7 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     socket.on("they_typing", (name, typing) => {
       console.log(name, typing);
-      setIsTheyTyping({username: name, typing: typing});
+      setIsTheyTyping({ username: name, typing: typing });
     });
   }, [socket]);
 
