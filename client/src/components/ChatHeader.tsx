@@ -1,8 +1,8 @@
 import { useState } from "react";
 import "../styles/ChatHeader.css";
-type Props = {};
+
 import { useChatContext } from "../context/ChatContext";
-function ChatHeader({}: Props) {
+function ChatHeader() {
   const [showModal, setShowModal] = useState(false);
   const [newRoom, setNewRoom] = useState("");
   const { setRoom, room } = useChatContext();

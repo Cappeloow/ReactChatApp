@@ -1,10 +1,6 @@
 import { useChatContext } from "../context/ChatContext";
 import ScrollToBottom from "react-scroll-to-bottom";
 import "../styles/ChatBubble.css";
-type TypingStatus = {
-  typing: boolean;
-  username: string;
-};
 
 function ChatBubble() {
   const { messages, username, isTheyTyping } = useChatContext();

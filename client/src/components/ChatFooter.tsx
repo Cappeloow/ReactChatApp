@@ -1,10 +1,9 @@
-import { FormEvent, useState, useEffect } from "react";
+import { FormEvent, useState } from "react";
 import { useChatContext } from "../context/ChatContext";
 import "../styles/ChatFooter.css";
-type Props = {};
 
 let timeout: NodeJS.Timeout;
-function ChatFooter({}: Props) {
+function ChatFooter() {
   const { clientMessage, username, isMeTyping, setIsMeTyping } =
     useChatContext();
   const [msg, setMsg] = useState("");
