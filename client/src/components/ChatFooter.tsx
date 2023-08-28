@@ -4,31 +4,34 @@ import "../styles/ChatFooter.css";
 
 let timeout: NodeJS.Timeout;
 function ChatFooter() {
-  const { clientMessage, username, isMeTyping, setIsMeTyping } =
+  const { clientMessage, username, isMeTyping, setIsMeTyping, room } =
     useChatContext();
   const [msg, setMsg] = useState("");
   const [gif, setGif] = useState();
   const [isGif, setIsGif] = useState(false);
 
   const handleClick = (e: FormEvent) => {
-    const currentTime = new Date();
+    e.preventDefault(); // prevents reload on form submit
 
-    const time =
-      currentTime.getHours() +
+    if (msg) {
+      const currentTime = new Date();
+
+      const time =
+      currentTime.getHours().toString().padStart(2, "0") +
       ":" +
       currentTime.getMinutes().toString().padStart(2, "0");
-    const messageData = {
-      author: username,
-      message: msg,
-      timestamp: time.toString(),
-    };
+      const messageData = {
+        author: username,
+        message: msg,
+        timestamp: time.toString(),
+      };
 
-    console.log(messageData);
+      console.log(messageData);
 
-    e.preventDefault();
-    clientMessage(messageData);
-    setMsg("");
-    setIsGif(false);
+      clientMessage(messageData);
+      setMsg("");
+      setIsGif(false);
+    }
   };
 
   const handleChange = (inputValue: string) => {
@@ -76,7 +79,7 @@ function ChatFooter() {
                   }
                 }
               }}
-              placeholder="Write message"
+              placeholder={`Skriv meddelande till @${room}`}
             />
           </>
         ) : null}
