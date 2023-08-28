@@ -11,6 +11,11 @@ export interface Chat {
   //***/
 }
 
+const defaultValueIsTheyTyping = {
+  username: "",
+  typing: false,
+};
+
 interface ChatContext {
   username: string;
   setUsername: React.Dispatch<React.SetStateAction<string>>;
@@ -19,11 +24,11 @@ interface ChatContext {
   messages: Message[];
   setRoom: React.Dispatch<React.SetStateAction<string>>;
   room: string;
-  roomList: [];
+  roomList: Room[];
   setIsMeTyping: React.Dispatch<React.SetStateAction<boolean>>;
   isMeTyping: boolean;
-  isTheyTyping: {};
-  setIsTheyTyping: {};
+  isTheyTyping: TypingInfo;
+  setIsTheyTyping: React.Dispatch<React.SetStateAction<TypingInfo>>;
 }
 
 const ChatContext = createContext<ChatContext>({
@@ -37,8 +42,8 @@ const ChatContext = createContext<ChatContext>({
   roomList: [],
   setIsMeTyping: Boolean,
   isMeTyping: false,
-  isTheyTyping: {},
-  setIsTheyTyping: {},
+  isTheyTyping: defaultValueIsTheyTyping,
+  setIsTheyTyping: () => {},
 });
 
 interface Message {
@@ -52,6 +57,11 @@ interface Room {
   participants: string[];
 }
 
+export interface TypingInfo {
+  username: string;
+  typing: boolean;
+}
+
 const socket = io("http://localhost:3000/", { autoConnect: false });
 export const useChatContext = () => useContext(ChatContext);
 
@@ -62,7 +72,7 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
   const [roomList, setRoomList] = useState<Room[]>([]);
   const [usernameList, setUsernameList] = useState<string[]>([]);
   const [isMeTyping, setIsMeTyping] = useState(false);
-  const [isTheyTyping, setIsTheyTyping] = useState({
+  const [isTheyTyping, setIsTheyTyping] = useState<TypingInfo>({
     username: "",
     typing: false,
   });
@@ -119,7 +129,7 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
   }, [isMeTyping]);
 
   useEffect(() => {
-    socket.on("they_typing", (name, typing) => {
+    socket.on("they_typing", (name: string, typing: boolean) => {
       console.log(name, typing);
       setIsTheyTyping({ username: name, typing: typing });
     });
