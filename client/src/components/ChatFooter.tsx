@@ -16,7 +16,7 @@ function ChatFooter({}: Props) {
     if (msg) {
       const currentTime = new Date();
 
-      const time = currentTime.getHours() + ":" + currentTime.getMinutes().toString().padStart(2, "0");
+      const time = currentTime.getHours().toString().padStart(2, "0") + ":" + currentTime.getMinutes().toString().padStart(2, "0");
       const messageData = {
         author: username,
         message: msg,
