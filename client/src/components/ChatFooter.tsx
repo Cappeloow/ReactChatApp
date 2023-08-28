@@ -5,7 +5,7 @@ type Props = {};
 
 let timeout; // NodeJS.Timeout as its type?
 function ChatFooter({}: Props) {
-  const { clientMessage, username, isMeTyping, setIsMeTyping } = useChatContext();
+  const { clientMessage, username, isMeTyping, setIsMeTyping, room } = useChatContext();
   const [msg, setMsg] = useState("");
   const [gif, setGif] = useState();
   const [isGif, setIsGif] = useState(false);
@@ -72,7 +72,7 @@ function ChatFooter({}: Props) {
                   setIsGif(true);
                 }
               }}
-              placeholder="Write message"
+              placeholder={`Skriv meddelande till @${room}`}
               type="text"
             />
           </>
