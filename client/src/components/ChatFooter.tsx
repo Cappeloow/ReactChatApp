@@ -11,21 +11,24 @@ function ChatFooter({}: Props) {
   const [isGif, setIsGif] = useState(false);
 
   const handleClick = (e: FormEvent) => {
-    const currentTime = new Date();
+    e.preventDefault(); // prevents reload on form submit
 
-    const time = currentTime.getHours() + ":" + currentTime.getMinutes().toString().padStart(2, "0");
-    const messageData = {
-      author: username,
-      message: msg,
-      timestamp: time.toString(),
-    };
+    if (msg) {
+      const currentTime = new Date();
 
-    console.log(messageData);
+      const time = currentTime.getHours() + ":" + currentTime.getMinutes().toString().padStart(2, "0");
+      const messageData = {
+        author: username,
+        message: msg,
+        timestamp: time.toString(),
+      };
 
-    e.preventDefault();
-    clientMessage(messageData);
-    setMsg("");
-    setIsGif(false);
+      console.log(messageData);
+
+      clientMessage(messageData);
+      setMsg("");
+      setIsGif(false);
+    }
   };
   
   const handleChange = (inputValue: string) => {
