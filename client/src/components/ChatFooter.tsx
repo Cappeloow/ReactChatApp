@@ -3,9 +3,10 @@ import { useChatContext } from "../context/ChatContext";
 import "../styles/ChatFooter.css";
 type Props = {};
 
-let timeout; // NodeJS.Timeout as its type?
+let timeout: NodeJS.Timeout;
 function ChatFooter({}: Props) {
-  const { clientMessage, username, isMeTyping, setIsMeTyping } = useChatContext();
+  const { clientMessage, username, isMeTyping, setIsMeTyping } =
+    useChatContext();
   const [msg, setMsg] = useState("");
   const [gif, setGif] = useState();
   const [isGif, setIsGif] = useState(false);
@@ -13,7 +14,10 @@ function ChatFooter({}: Props) {
   const handleClick = (e: FormEvent) => {
     const currentTime = new Date();
 
-    const time = currentTime.getHours() + ":" + currentTime.getMinutes().toString().padStart(2, "0");
+    const time =
+      currentTime.getHours() +
+      ":" +
+      currentTime.getMinutes().toString().padStart(2, "0");
     const messageData = {
       author: username,
       message: msg,
@@ -27,7 +31,7 @@ function ChatFooter({}: Props) {
     setMsg("");
     setIsGif(false);
   };
-  
+
   const handleChange = (inputValue: string) => {
     setMsg(inputValue);
 
@@ -36,7 +40,7 @@ function ChatFooter({}: Props) {
     }
 
     clearTimeout(timeout);
-    
+
     timeout = setTimeout(() => {
       setIsMeTyping(false);
     }, 500);
@@ -64,13 +68,16 @@ function ChatFooter({}: Props) {
               onChange={(e) => {
                 handleChange(e.target.value);
                 if (e.target.value === "/gif") {
-                  const data = fetchData();
-                  setGif(data);
-                  setIsGif(true);
+                  try {
+                    const data = fetchData();
+                    setGif(data);
+                    setIsGif(true);
+                  } catch (error) {
+                    console.log(error);
+                  }
                 }
               }}
               placeholder="Write message"
-              type="text"
             />
           </>
         ) : null}
