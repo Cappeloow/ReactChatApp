@@ -1,9 +1,7 @@
 import "../styles/ChatBar.css";
 import { useChatContext } from "../context/ChatContext";
 
-type Props = {};
-
-function ChatBar({}: Props) {
+function ChatBar() {
   const { roomList, setRoom } = useChatContext();
   console.log("roomList:", roomList);
 

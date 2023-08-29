@@ -1,35 +1,37 @@
-import { FormEvent, useState, useEffect } from "react";
+import { FormEvent, useState } from "react";
 import { useChatContext } from "../context/ChatContext";
 import "../styles/ChatFooter.css";
-type Props = {};
 
-let timeout; // NodeJS.Timeout as its type?
-function ChatFooter({}: Props) {
-  const { clientMessage, username, isMeTyping, setIsMeTyping } =
+let timeout: NodeJS.Timeout;
+function ChatFooter() {
+  const { clientMessage, username, isMeTyping, setIsMeTyping, room } =
     useChatContext();
   const [msg, setMsg] = useState("");
   const [gif, setGif] = useState();
   const [isGif, setIsGif] = useState(false);
 
   const handleClick = (e: FormEvent) => {
-    const currentTime = new Date();
+    e.preventDefault(); // prevents reload on form submit
 
-    const time =
-      currentTime.getHours() +
-      ":" +
-      currentTime.getMinutes().toString().padStart(2, "0");
-    const messageData = {
-      author: username,
-      message: msg,
-      timestamp: time.toString(),
-    };
+    if (msg) {
+      const currentTime = new Date();
 
-    console.log(messageData);
+      const time =
+        currentTime.getHours().toString().padStart(2, "0") +
+        ":" +
+        currentTime.getMinutes().toString().padStart(2, "0");
+      const messageData = {
+        author: username,
+        message: msg,
+        timestamp: time.toString(),
+      };
 
-    e.preventDefault();
-    clientMessage(messageData);
-    setMsg("");
-    setIsGif(false);
+      console.log(messageData);
+
+      clientMessage(messageData);
+      setMsg("");
+      setIsGif(false);
+    }
   };
 
   const handleChange = (inputValue: string) => {
@@ -68,13 +70,16 @@ function ChatFooter({}: Props) {
               onChange={(e) => {
                 handleChange(e.target.value);
                 if (e.target.value === "/gif") {
-                  const data = fetchData();
-                  setGif(data);
-                  setIsGif(true);
+                  try {
+                    const data = fetchData();
+                    setGif(data);
+                    setIsGif(true);
+                  } catch (error) {
+                    console.log(error);
+                  }
                 }
               }}
-              placeholder="Write message"
-              type="text"
+              placeholder={`Skriv meddelande till @${room}`}
             />
           </>
         ) : null}

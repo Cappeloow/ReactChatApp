@@ -5,29 +5,39 @@ import ChatFooter from "../components/ChatFooter";
 import ChatHeader from "../components/ChatHeader";
 import "../styles/Lobby.css";
 import { useChatContext } from "../context/ChatContext";
-import { useEffect, useState } from "react";
-import { io } from "socket.io-client";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 function Lobby() {
   const { username } = useChatContext();
-
+  const navigate = useNavigate();
   useEffect(() => {
     console.log("Username from Lobby:", username);
   }, []);
 
   return (
     <div className="lobbyContainer">
-      <div className="lobby">
-        <ChatHeader />
-        <main>
-          <div>
-            <ChatBar />
-          </div>
-          <div>
-            <ChatBody />
-            <ChatFooter />
-          </div>
-        </main>
-      </div>
+      {username ? (
+        <div className="lobby">
+          <ChatHeader />
+          <main>
+            <div>
+              <ChatBar />
+            </div>
+            <div>
+              <ChatBody />
+              <ChatFooter />
+            </div>
+          </main>
+        </div>
+      ) : (
+        <div className="tryAgainDiv">
+          <p>Username is already in use, please try a different one!</p>
+          <button onClick={() => navigate("/")} className="backBtn">
+            GO BACK
+          </button>
+        </div>
+      )}
     </div>
   );
 }

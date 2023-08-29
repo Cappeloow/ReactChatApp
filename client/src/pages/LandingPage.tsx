@@ -1,18 +1,28 @@
 import "../styles/LandingPage.css";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useChatContext } from "../context/ChatContext";
 
 function LandingPage() {
   const { username, setUsername, connectToServer } = useChatContext();
+
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    if (username) {
+  const handleClick = (data) => {
+    if (data.find((user) => user === username)) {
+      alert("the name is already taken");
+    } else {
       connectToServer(username);
       navigate("/lobby");
-    } else {
-      console.log("Enter a username");
     }
+  };
+
+  const fetchUsers = async () => {
+    const response = await fetch("http://localhost:3000/getUsers");
+    console.log(response);
+    const data = await response.json();
+    console.log(data);
+    handleClick(data);
   };
 
   return (
@@ -23,7 +33,7 @@ function LandingPage() {
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Användarnamn..."
         ></input>
-        <button onClick={handleClick}>Anslut</button>
+        <button onClick={fetchUsers}>Anslut</button>
       </div>
     </div>
   );

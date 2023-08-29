@@ -17,3 +17,17 @@
 main {
   display: flex;
 }
+
+.tryAgainDiv {
+  display:flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.backBtn {
+  color:orange;
+  background-color:black;
+  height:40px;
+  width:100px;
+
+}
