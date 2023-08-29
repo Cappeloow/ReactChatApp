@@ -1,16 +1,21 @@
 header {
   display: flex;
+  align-items: center;
   flex-direction: row;
   justify-content: space-between;
-  width: 100%;
-  height: 3rem;
-  padding-bottom: 2px;
+  border-radius: 0.5rem 0.5rem 0px 0px;
+  height: 2rem;
+  padding: 1rem;
+  /* background-color: rgb(33, 91, 152); */
+  background-color: rgb(64, 141, 212);
 }
 
 h1 {
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #ffffff;
+  margin-left: 2rem;
 }
 
 .button-container {
@@ -18,6 +23,71 @@ h1 {
   justify-content: center;
 }
 
+.header-button {
+  display: inline-block;
+  padding: 0.35em 1.2em;
+  border: 0.1em solid #ffffff;
+  margin-right: 0.5rem;
+  border-radius: 0.5em;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 300;
+  background-color: transparent;
+  height: 2rem;
+  text-align: center;
+  transition: all 0.2s;
+}
+.header-button:hover {
+  color: #000000;
+  background-color: #ffffff;
+}
+
 dialog {
   z-index: 1;
+  border: 0px;
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+  border-radius: 1rem;
+}
+
+.dialog-title {
+  background-color: rgb(64, 141, 212);
+  width: 100%;
+  margin: 0px;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+dialog input {
+  width: 100%;
+  display: flex;
+  height: 3.5rem;
+  padding: 0px;
+  border: 0px;
+  background-color: #f8f8f8;
+  font-size: 16px;
+  font-family: "Open Sans", sans-serif;
+  text-align: center;
+}
+
+.dialog-create-button {
+  font-family: "Open Sans", sans-serif;
+  width: 100%;
+  height: 3.5rem;
+  border: 2px solid #ccc;
+
+  box-sizing: border-box;
+  text-decoration: none;
+  font-weight: 300;
+  background-color: #f8f8f8;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+dialog button:hover {
+  color: #000000;
+  background-color: #eaeaea;
+  cursor: pointer;
 }

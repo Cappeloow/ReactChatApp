@@ -15,7 +15,7 @@ function ChatBubble() {
               <p>{message.timestamp}</p>
             </div>
             <div className="bubble">
-              {message.message.startsWith("https://") ? (
+              {message.message.startsWith("https://media") ? (
                 <img src={message.message} alt="Image" height={100} />
               ) : (
                 <p>{message.message}</p>
@@ -24,6 +24,11 @@ function ChatBubble() {
           </div>
         ))}
 
+        <p>
+          {isTheyTyping.typing && isTheyTyping.username !== username
+            ? `${isTheyTyping.username} 💬`
+            : ""}
+        </p>
         <p>
           {isTheyTyping.typing && isTheyTyping.username !== username
             ? `${isTheyTyping.username} 💬`

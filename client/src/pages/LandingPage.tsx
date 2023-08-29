@@ -28,7 +28,7 @@ function LandingPage() {
   return (
     <div className="mainContainer">
       <div className="loginForm">
-        <h1>Login</h1>
+        <h1 className="sign-in">Sign in</h1>
         <input
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Användarnamn..."

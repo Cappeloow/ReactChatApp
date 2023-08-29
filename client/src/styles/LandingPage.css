@@ -4,25 +4,54 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 1rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+.sign-in {
+  background-color: rgb(64, 141, 212);
+  width: 100%;
+  margin: 0px;
+  height: 3.5rem;
+  border-radius: 1rem 1rem 0rem 0rem;
 }
 
 .loginForm {
-  background-color: red;
-  height: 400px;
-  width: 400px;
-  border-radius: 10%;
+  height: 100%;
+  width: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .loginForm > input {
-  width: 150px;
-  padding: 10px;
+  width: 100%;
+  display: flex;
+  height: 3.5rem;
+  padding: 0px;
+  border: 0px;
+  background-color: #f8f8f8;
+  font-size: 16px;
+  font-family: "Open Sans", sans-serif;
+  text-align: center;
 }
 
 .loginForm > button {
-  width: 100px;
-  margin: 10px;
+  font-family: "Open Sans", sans-serif;
+  width: 100%;
+  height: 3.5rem;
+  border: 0px solid #ccc;
+  border-radius: 0rem 0rem 1rem 1rem;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-weight: 300;
+  background-color: transparent;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.loginForm > button:hover {
+  color: #000000;
+  background-color: #eaeaea;
   cursor: pointer;
 }

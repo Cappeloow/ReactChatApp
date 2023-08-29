@@ -17,9 +17,9 @@ function ChatFooter() {
       const currentTime = new Date();
 
       const time =
-      currentTime.getHours().toString().padStart(2, "0") +
-      ":" +
-      currentTime.getMinutes().toString().padStart(2, "0");
+        currentTime.getHours().toString().padStart(2, "0") +
+        ":" +
+        currentTime.getMinutes().toString().padStart(2, "0");
       const messageData = {
         author: username,
         message: msg,
@@ -88,7 +88,7 @@ function ChatFooter() {
             <img src={msg} height={100} alt="" />
           </>
         ) : null}
-        <button>Send</button>
+        <button className="send-button">Send</button>
       </form>
     </div>
   );

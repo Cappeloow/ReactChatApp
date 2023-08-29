@@ -16,19 +16,21 @@
 }
 
 .bubble {
-  background-color: rgb(98, 185, 236);
+  background-color: rgba(98, 165, 236, 0.917);
+  /* background-color: rgb(98, 185, 236); */
   margin: 0px;
   min-height: 2rem;
   display: flex;
   align-items: center;
-  border-radius: 7px;
+
   padding-left: 4px;
   max-width: 55%;
+  min-width: 55%;
   margin-bottom: 10px;
 }
 .bubble > p {
-  width:100%;
-  min-height:100%;
+  width: 100%;
+  min-height: 100%;
   word-break: break-word;
 }
 
@@ -43,12 +45,21 @@
   width: 55%;
 }
 
+#you .bubble {
+  border-radius: 10px 10px 0px 10px;
+}
+
 #other {
   display: flex;
   flex-direction: column;
+}
+
+#other .info {
   width: 55%;
 }
 
 #other .bubble {
   background-color: rgb(165, 210, 242);
+  width: 55%;
+  border-radius: 10px 10px 10px 0px;
 }
