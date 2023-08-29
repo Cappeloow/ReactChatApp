@@ -15,14 +15,14 @@ const io = new Server(server, {
 });
 
 
-const userList = [];
+let userList = [];
 
 
 app.get('/getUsers', (req, res) => {
   res.json(userList);
 })
 
-const roomList = [];
+let roomList = [];
 
 io.on("connection", (socket) => {
   console.log("User has connected with id:", socket.id);
@@ -101,7 +101,22 @@ io.on("connection", (socket) => {
       console.log(roomList);
       io.emit("room_list", roomList);
     });
- 
+
+    
+    socket.on("disconnect", (reason) => {
+      // Removes the disconnected user from userList
+      userList = userList.filter((user) => user !== socket.username);
+      console.log(`${socket.username} has disconnected due to ${reason}`);
+
+      // Filters and updates the roomList to not include the disconnected user
+      roomList.map(room => {
+        room.participants = room.participants.filter((user) => user !== socket.username)
+      });
+
+      // Emits the new updated roomList to other clients
+      io.emit("updated_room_list", roomList);
+    });
+    
 });
 
 server.listen(3000, () => console.log("Server is up"));

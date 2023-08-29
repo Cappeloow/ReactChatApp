@@ -134,6 +134,13 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
       setIsTheyTyping({ username: name, typing: typing });
     });
   }, [socket]);
+  
+  useEffect(() => {
+    socket.on("updated_room_list", (data) => {
+      console.log(data);
+      setRoomList(data);
+    });
+  }, [socket]);
 
   return (
     <div>

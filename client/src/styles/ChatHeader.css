@@ -15,7 +15,6 @@ h1 {
   justify-content: center;
   align-items: center;
   color: #ffffff;
-  margin-left: 2rem;
 }
 
 .button-container {
@@ -41,6 +40,14 @@ h1 {
 .header-button:hover {
   color: #000000;
   background-color: #ffffff;
+  cursor: pointer;
+}
+
+.header-button.header-button-disabled {
+  background-color: rgba(100,100,100, 0.5);
+  color: rgba(255,255,255, 0.25);
+  border-color: rgba(100,100,100, 0.1);
+  cursor: not-allowed;
 }
 
 dialog {

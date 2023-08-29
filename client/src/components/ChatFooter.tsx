@@ -88,7 +88,7 @@ function ChatFooter() {
             <img src={msg} height={100} alt="" />
           </>
         ) : null}
-        <button className="send-button">Send</button>
+        <button className="send-button">Skicka</button>
       </form>
     </div>
   );

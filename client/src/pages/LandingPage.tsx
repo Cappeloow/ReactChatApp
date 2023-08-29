@@ -10,7 +10,7 @@ function LandingPage() {
 
   const handleClick = (data) => {
     if (data.find((user) => user === username)) {
-      alert("the name is already taken");
+      alert("Namnet har redan tagits, vänligen använd ett annat.");
     } else {
       connectToServer(username);
       navigate("/lobby");
@@ -28,7 +28,7 @@ function LandingPage() {
   return (
     <div className="mainContainer">
       <div className="loginForm">
-        <h1 className="sign-in">Sign in</h1>
+        <h1 className="sign-in">Logga in</h1>
         <input
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Användarnamn..."

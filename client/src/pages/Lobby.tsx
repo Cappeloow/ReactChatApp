@@ -16,29 +16,28 @@ function Lobby() {
   }, []);
 
   return (
-    <div className="lobbyContainer">
+    <>
       {username ? (
-        <div className="lobby">
-          <ChatHeader />
-          <main>
-            <div>
-              <ChatBar />
-            </div>
-            <div>
-              <ChatBody />
-              <ChatFooter />
-            </div>
-          </main>
+        <div className="lobbyContainer">
+          <div className="lobby">
+            <ChatHeader />
+            <main>
+              <div>
+                <ChatBar />
+              </div>
+              <div>
+                <ChatBody />
+                <ChatFooter />
+              </div>
+            </main>
+          </div>
         </div>
       ) : (
-        <div className="tryAgainDiv">
-          <p>Username is already in use, please try a different one!</p>
-          <button onClick={() => navigate("/")} className="backBtn">
-            GO BACK
-          </button>
-        </div>
+        useEffect(() => {
+          navigate("/")
+        }, [])
       )}
-    </div>
+    </>
   );
 }
 
