@@ -1,16 +1,46 @@
 aside {
   height: 100%;
+  width: 10rem;
   display: flex;
   flex-direction: column;
-}
 
-aside h1 {
-  display: flex;
-  margin-top: 0.5rem;
+  padding: 0px 5px;
+  border-radius: 0rem 0rem 0rem 1rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.13);
 }
 
 aside h2 {
   display: flex;
   margin-top: 0.5rem;
   justify-content: center;
+}
+
+.room-title {
+  margin: 0px;
+}
+
+.room-bubble {
+  background-color: rgba(100, 167, 230, 0.711);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.user-list {
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  color: rgb(61, 58, 58);
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-weight: bold;
+  margin: 2px;
 }

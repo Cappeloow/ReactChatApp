@@ -17,11 +17,15 @@ function Lobby() {
   return (
     <div className="lobbyContainer">
       <div className="lobby">
-        <ChatBar />
+        <ChatHeader />
         <main>
-          <ChatHeader />
-          <ChatBody />
-          <ChatFooter />
+          <div>
+            <ChatBar />
+          </div>
+          <div>
+            <ChatBody />
+            <ChatFooter />
+          </div>
         </main>
       </div>
     </div>

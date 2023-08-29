@@ -1,9 +1,7 @@
 .footer {
   height: 2.5rem;
   display: flex;
-  justify-content: space-between;
-  padding-top: 1px;
-  height:100px;
+  height: 100px;
 }
 
 .formContainer {
@@ -14,6 +12,31 @@
 }
 
 .formContainer textarea {
+  resize: none;
   width: 100%;
-  resize:none;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+
+  background-color: #f8f8f8;
+  font-size: 16px;
+  font-family: "Open Sans", sans-serif;
+}
+
+.send-button {
+  display: inline-block;
+  font-family: "Open Sans", sans-serif;
+  width: 5rem;
+  border: 1px solid #ccc;
+  border-radius: 0px 0px 10px 0px;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-weight: 300;
+  background-color: transparent;
+  text-align: center;
+  transition: all 0.2s;
+}
+.send-button:hover {
+  color: #000000;
+  background-color: #eaeaea;
+  cursor: pointer;
 }

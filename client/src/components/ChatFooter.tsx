@@ -5,7 +5,8 @@ type Props = {};
 
 let timeout; // NodeJS.Timeout as its type?
 function ChatFooter({}: Props) {
-  const { clientMessage, username, isMeTyping, setIsMeTyping } = useChatContext();
+  const { clientMessage, username, isMeTyping, setIsMeTyping } =
+    useChatContext();
   const [msg, setMsg] = useState("");
   const [gif, setGif] = useState();
   const [isGif, setIsGif] = useState(false);
@@ -13,7 +14,10 @@ function ChatFooter({}: Props) {
   const handleClick = (e: FormEvent) => {
     const currentTime = new Date();
 
-    const time = currentTime.getHours() + ":" + currentTime.getMinutes().toString().padStart(2, "0");
+    const time =
+      currentTime.getHours() +
+      ":" +
+      currentTime.getMinutes().toString().padStart(2, "0");
     const messageData = {
       author: username,
       message: msg,
@@ -27,7 +31,7 @@ function ChatFooter({}: Props) {
     setMsg("");
     setIsGif(false);
   };
-  
+
   const handleChange = (inputValue: string) => {
     setMsg(inputValue);
 
@@ -36,7 +40,7 @@ function ChatFooter({}: Props) {
     }
 
     clearTimeout(timeout);
-    
+
     timeout = setTimeout(() => {
       setIsMeTyping(false);
     }, 500);
@@ -79,7 +83,7 @@ function ChatFooter({}: Props) {
             <img src={msg} height={100} alt="" />
           </>
         ) : null}
-        <button>Send</button>
+        <button className="send-button">Send</button>
       </form>
     </div>
   );
