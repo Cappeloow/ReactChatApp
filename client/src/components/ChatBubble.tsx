@@ -29,7 +29,6 @@ function ChatBubble() {
             ? `${isTheyTyping.username} 💬`
             : ""}
         </p>
-        
       </ScrollToBottom>
     </div>
   );
