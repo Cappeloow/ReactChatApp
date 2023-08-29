@@ -14,6 +14,7 @@ function ChatHeader() {
 
   return (
     <header>
+      <img style={{width: 50}} src="chat-app.svg" />
       <h1>{`${username} #${room}`}</h1>
       <div className="button-container">
         <button className="header-button" onClick={() => setShowModal(true)}>
