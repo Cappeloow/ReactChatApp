@@ -29,11 +29,6 @@ function ChatBubble() {
             ? `${isTheyTyping.username} 💬`
             : ""}
         </p>
-        <p>
-          {isTheyTyping.typing && isTheyTyping.username !== username
-            ? `${isTheyTyping.username} 💬`
-            : ""}
-        </p>
       </ScrollToBottom>
     </div>
   );
