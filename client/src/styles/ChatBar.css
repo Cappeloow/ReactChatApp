@@ -3,7 +3,6 @@ aside {
   width: 10rem;
   display: flex;
   flex-direction: column;
-
   padding: 0px 5px;
   border-radius: 0rem 0rem 0rem 1rem;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.13);

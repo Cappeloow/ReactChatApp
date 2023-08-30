@@ -17,7 +17,6 @@
 
 .bubble {
   background-color: rgba(98, 165, 236, 0.917);
-  /* background-color: rgb(98, 185, 236); */
   margin: 0px;
   min-height: 2rem;
   display: flex;

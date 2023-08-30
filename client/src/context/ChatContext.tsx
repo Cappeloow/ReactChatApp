@@ -7,10 +7,6 @@ import {
   useEffect,
 } from "react";
 
-export interface Chat {
-  //***/
-}
-
 const defaultValueIsTheyTyping = {
   username: "",
   typing: false,
@@ -77,12 +73,8 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
     typing: false,
   });
 
-  console.log("isMeTyping:", isMeTyping);
-
   const connectToServer = (username: string) => {
     socket.connect();
-    console.log(usernameList);
-    console.log("this is the username:", username);
     socket.emit("username_input", username);
     setRoom("lobby");
   };
@@ -90,13 +82,11 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     socket.on("list_of_users", (userList) => {
       setUsernameList(userList);
-      console.log("Updated user list:", userList);
     });
   }, [socket]);
 
   useEffect(() => {
     socket.on("username_taken", () => {
-      console.log("Username is taken. Please choose a different username.");
       setUsername("");
     });
   }, [socket]);
@@ -120,7 +110,6 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     socket.on("room_list", (roomList) => {
-      console.log(roomList);
       setRoomList(roomList);
     });
   }, [socket]);
@@ -131,14 +120,12 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     socket.on("they_typing", (name: string, typing: boolean) => {
-      console.log(name, typing);
       setIsTheyTyping({ username: name, typing: typing });
     });
   }, [socket]);
 
   useEffect(() => {
     socket.on("updated_room_list", (data) => {
-      console.log(data);
       setRoomList(data);
     });
   }, [socket]);

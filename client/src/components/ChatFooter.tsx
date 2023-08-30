@@ -7,7 +7,6 @@ function ChatFooter() {
   const { clientMessage, username, isMeTyping, setIsMeTyping, room } =
     useChatContext();
   const [msg, setMsg] = useState("");
-  const [gif, setGif] = useState();
   const [isGif, setIsGif] = useState(false);
 
   const handleClick = (e: FormEvent) => {
@@ -25,8 +24,6 @@ function ChatFooter() {
         message: msg,
         timestamp: time.toString(),
       };
-
-      console.log(messageData);
 
       clientMessage(messageData);
       setMsg("");
@@ -55,7 +52,6 @@ function ChatFooter() {
       }&tag=&rating=g`
     );
     const data = await response.json();
-    console.log(data);
 
     setMsg(data.data.images.downsized.url);
   }
@@ -71,8 +67,7 @@ function ChatFooter() {
                 handleChange(e.target.value);
                 if (e.target.value === "/gif") {
                   try {
-                    const data = fetchData();
-                    setGif(data);
+                    fetchData();
                     setIsGif(true);
                   } catch (error) {
                     console.log(error);
@@ -82,12 +77,9 @@ function ChatFooter() {
               placeholder={`Skriv meddelande till @${room}`}
             />
           </>
-        ) : null}
-        {isGif ? (
-          <>
-            <img src={msg} height={100} alt="" />
-          </>
-        ) : null}
+        ) : (
+          <img src={msg} height={100} alt="" />
+        )}
         <button className="send-button">Skicka</button>
       </form>
     </div>
