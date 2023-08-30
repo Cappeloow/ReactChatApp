@@ -1,4 +1,3 @@
-import React from "react";
 import ChatBar from "../components/ChatBar";
 import ChatBody from "../components/ChatBody";
 import ChatFooter from "../components/ChatFooter";
@@ -11,9 +10,6 @@ import { useNavigate } from "react-router-dom";
 function Lobby() {
   const { username } = useChatContext();
   const navigate = useNavigate();
-  useEffect(() => {
-    console.log("Username from Lobby:", username);
-  }, []);
 
   return (
     <>
@@ -34,7 +30,7 @@ function Lobby() {
         </div>
       ) : (
         useEffect(() => {
-          navigate("/")
+          navigate("/");
         }, [])
       )}
     </>

@@ -1,6 +1,5 @@
 import "../styles/LandingPage.css";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { useChatContext } from "../context/ChatContext";
 
 function LandingPage() {
@@ -19,9 +18,7 @@ function LandingPage() {
 
   const fetchUsers = async () => {
     const response = await fetch("http://localhost:3000/getUsers");
-    console.log(response);
     const data = await response.json();
-    console.log(data);
     handleClick(data);
   };
 

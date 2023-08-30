@@ -3,7 +3,6 @@ import { useChatContext } from "../context/ChatContext";
 
 function ChatBar() {
   const { roomList, setRoom } = useChatContext();
-  console.log("roomList:", roomList);
 
   return (
     <aside>
@@ -11,7 +10,11 @@ function ChatBar() {
 
       {roomList.map((room, i) => (
         <div className="room-bubble" key={i}>
-          <h3 className="room-title" onClick={() => setRoom(room.name)} style={{cursor: "pointer"}}>
+          <h3
+            className="room-title"
+            onClick={() => setRoom(room.name)}
+            style={{ cursor: "pointer" }}
+          >
             {room.name}
           </h3>
           <div className="user-list">

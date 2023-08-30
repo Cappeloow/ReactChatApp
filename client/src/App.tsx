@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./App.css";
 import Lobby from "./pages/Lobby";
 import LandingPage from "./pages/LandingPage";

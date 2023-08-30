@@ -1,4 +1,3 @@
-import React from "react";
 import ChatBubble from "./ChatBubble";
 
 import "../styles/ChatBody.css";
