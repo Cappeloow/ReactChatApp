@@ -108,6 +108,7 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     if (room) {
       socket.emit("join_room", room);
+      setMessages([]);
     }
   }, [room]);
 
@@ -134,7 +135,7 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
       setIsTheyTyping({ username: name, typing: typing });
     });
   }, [socket]);
-  
+
   useEffect(() => {
     socket.on("updated_room_list", (data) => {
       console.log(data);
